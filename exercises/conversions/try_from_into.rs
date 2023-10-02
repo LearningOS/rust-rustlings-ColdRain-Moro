@@ -23,8 +23,6 @@ enum IntoColorError {
     IntConversion,
 }
 
-// I AM NOT DONE
-
 // Your task is to complete this implementation
 // and return an Ok result of inner type Color.
 // You need to create an implementation for a tuple of three integers,
@@ -38,6 +36,20 @@ enum IntoColorError {
 impl TryFrom<(i16, i16, i16)> for Color {
     type Error = IntoColorError;
     fn try_from(tuple: (i16, i16, i16)) -> Result<Self, Self::Error> {
+        let (red, green, blue) = tuple;
+        if !(0..=255).contains(&red) {
+            return Err(IntoColorError::IntConversion);
+        }
+        let red = red as u8;
+        if !(0..=255).contains(&green) {
+            return Err(IntoColorError::IntConversion);
+        }
+        let green = green as u8;
+        if !(0..=255).contains(&blue) {
+            return Err(IntoColorError::IntConversion);
+        }
+        let blue = blue as u8;
+        Ok(Color { red, green, blue })
     }
 }
 
@@ -45,6 +57,20 @@ impl TryFrom<(i16, i16, i16)> for Color {
 impl TryFrom<[i16; 3]> for Color {
     type Error = IntoColorError;
     fn try_from(arr: [i16; 3]) -> Result<Self, Self::Error> {
+        let [red, green, blue] = arr;
+        if !(0..=255).contains(&red) {
+            return Err(IntoColorError::IntConversion);
+        }
+        let red = red as u8;
+        if !(0..=255).contains(&green) {
+            return Err(IntoColorError::IntConversion);
+        }
+        let green = green as u8;
+        if !(0..=255).contains(&blue) {
+            return Err(IntoColorError::IntConversion);
+        }
+        let blue = blue as u8;
+        Ok(Color { red, green, blue })
     }
 }
 
@@ -52,6 +78,20 @@ impl TryFrom<[i16; 3]> for Color {
 impl TryFrom<&[i16]> for Color {
     type Error = IntoColorError;
     fn try_from(slice: &[i16]) -> Result<Self, Self::Error> {
+        let [red, green, blue] = slice else { return Err(IntoColorError::BadLen); };
+        if !(0..=255).contains(red) {
+            return Err(IntoColorError::IntConversion);
+        }
+        let red = *red as u8;
+        if !(0..=255).contains(green) {
+            return Err(IntoColorError::IntConversion);
+        }
+        let green = *green as u8;
+        if !(0..=255).contains(blue) {
+            return Err(IntoColorError::IntConversion);
+        }
+        let blue = *blue as u8;
+        Ok(Color { red, green, blue })
     }
 }
 
